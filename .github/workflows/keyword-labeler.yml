@@ -74,12 +74,20 @@ jobs:
               }
             }
 
-            // ── STEP 2: Get title + body ──────────────────────────────────
+            // ── STEP 2: Get text to scan ──────────────────────────────────
             const isPR    = !!context.payload.pull_request;
             const payload = isPR ? context.payload.pull_request : context.payload.issue;
             const title   = (payload.title || '').toLowerCase();
             const body    = (payload.body  || '').toLowerCase();
-            const text    = title + ' ' + body;
+
+            // ⚠️  IMPORTANT: For PRs we scan the TITLE ONLY.
+            // PR bodies often contain templates, scoring tables, or label
+            // lists (e.g. the GSSoC score breakdown) that would cause every
+            // label to match. Issues scan title + body since they are
+            // written naturally by users.
+            const text = isPR ? title : (title + ' ' + body);
+
+            console.log(`Scanning ${isPR ? 'PR title only' : 'issue title + body'}: "${text.slice(0, 120)}..."`);
 
             // Word-boundary safe matcher (no substring false-positives)
             const match = (...phrases) =>
