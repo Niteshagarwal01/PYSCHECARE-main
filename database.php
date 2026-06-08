@@ -87,3 +87,4 @@ function resetAttempts(PDO $db, string $key): void
     $stmt = $db->prepare("DELETE FROM rate_limiting WHERE rate_key = :key");
     $stmt->execute([':key' => $key]);
 }
+/* Minor formatting cleanup */
