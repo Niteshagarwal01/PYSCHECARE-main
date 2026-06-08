@@ -96,3 +96,4 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     header("Location: signup.html");
     exit();
 }
+/* Minor formatting cleanup */
