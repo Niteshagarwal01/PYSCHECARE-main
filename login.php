@@ -60,3 +60,4 @@ try {
 
 header("Location: login.html?error=invalid");
 exit();
+/* Minor formatting cleanup */
